@@ -14,6 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ComprasProducto {
+
+	public ComprasProducto(Integer idProducto, Integer quantity, Double total, Boolean active) {
+		super();
+		this.id.setIdProducto(idProducto);
+		this.cantidad = quantity;
+		this.total = total;
+		this.estado = active;
+	}
+
 	@EmbeddedId
 	private ComprasProductoPK id;
 
@@ -29,5 +38,4 @@ public class ComprasProducto {
 	@JoinColumn(name = "id_producto", insertable = false, updatable = false)
 	private Producto producto;
 
-	
 }

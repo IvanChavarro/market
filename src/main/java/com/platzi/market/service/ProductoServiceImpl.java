@@ -9,8 +9,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.platzi.market.dto.CategoriaDTO;
 import com.platzi.market.dto.ProductoDTO;
 import com.platzi.market.entity.Producto;
+import com.platzi.market.repository.CategoryRepository;
 import com.platzi.market.repository.ProductoRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,8 @@ public class ProductoServiceImpl implements ProductoService {
 
 	@Autowired
 	private ProductoRepository prodRepo;
+	@Autowired
+	private CategoryRepository cateRepo;
 
 	@Override
 	public List<ProductoDTO> getAll() {
@@ -54,6 +58,7 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public ProductoDTO save(ProductoDTO ProductoDTO) {
 		log.info("Starting save at " + new Date());
+		ProductoDTO.setCategory(CategoriaDTO.cateDTOFun.apply(cateRepo.findById(ProductoDTO.getCategoryId()).get()));
 		return ProductoDTO.productDTOFun.apply(prodRepo.save(ProductoDTO.productFun.apply(ProductoDTO)));
 	}
 
